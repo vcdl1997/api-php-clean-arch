@@ -1,0 +1,61 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API - Gestão de Usuários",
+        "description": "Esta API de Gestão de Usuários foi construida com o intuito de servir como exemplo de aplicação de uma Arquitetura Limpa (Clean Architecture)",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Busca um usuário pelo ID.",
+                "operationId": "3d2ee4fa7d67abe271185a6356946846",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do Usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário encontrado com sucesso."
+                    },
+                    "400": {
+                        "description": "Erro ao processar requisição."
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado."
+                    },
+                    "500": {
+                        "description": "Servidor não pode atender à solicitação."
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Usuários",
+            "description": "Usuários"
+        }
+    ]
+}

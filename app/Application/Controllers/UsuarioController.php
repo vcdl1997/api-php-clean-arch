@@ -6,6 +6,7 @@ use App\Application\Contracts\UsuarioApi;
 use App\Application\Services\UsuarioService;
 use App\Domain\VO\UsuarioVO;
 use App\Shared\Enums\HttpStatusEnum;
+use App\Shared\Utils\ResponseUtils;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 
@@ -22,11 +23,11 @@ class UsuarioController extends Controller implements UsuarioApi
     }
 
     public function findBy(int $id): JsonResponse  {
-        return Response::json($this->usuarioService->findBy($id), HttpStatusEnum::OK);
+        return Response::json($this->usuarioService->findBy($id), status: HttpStatusEnum::OK);
     }
 
     public function create(UsuarioVO $usuarioVO): JsonResponse  {
-        return Response::json($this->usuarioService->create($usuarioVO), HttpStatusEnum::CREATED);
+        return ResponseUtils::created($this->usuarioService->create($usuarioVO), "usuario.findBy");
     }
 
     public function update(int $id, UsuarioVO $usuarioVO): JsonResponse  {

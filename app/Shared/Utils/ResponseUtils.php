@@ -9,9 +9,13 @@ use Illuminate\Validation\ValidationException;
 
 class ResponseUtils
 {
+    public static function created(object $resource, string $uri): JsonResponse{
+        return response()->json($resource, HttpStatusEnum::CREATED, ["Location" => route($uri, $resource->id)]);
+    }
+
     public static function unprocessableEntity(ValidationException $exception): JsonResponse{
-        $errors = collect($exception->errors())->map(function ($message, $error) {
-            return ['field' =>  $error, 'message' => $message[0]];
+        $errors = collect($exception->errors())->map(function ($message, $field) {
+            return ['field' =>  $field, 'message' => current($message)];
         });
 
         return response()->json([

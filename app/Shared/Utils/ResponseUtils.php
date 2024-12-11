@@ -3,8 +3,6 @@
 namespace App\Shared\Utils;
 
 use App\Shared\Enums\HttpStatusEnum;
-use App\Shared\Exceptions\BadRequestException;
-use App\Shared\Exceptions\NotFoundException;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -18,14 +16,14 @@ class ResponseUtils
 
         return response()->json([
             'errors' => $errors,
-            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s.u')
+            'timestamp' => now()->format('Y-m-d H:i:s.u')
         ],  HttpStatusEnum::UNPROCESSABLE_ENTITY);
     }
 
     public static function error(Exception $exception, int $statusCode): JsonResponse{
         return response()->json([
             'message' => $exception->getMessage(),
-            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s.u')
+            'timestamp' => now()->format('Y-m-d H:i:s.u')
         ], status: $statusCode);
     }
 

@@ -34,7 +34,7 @@ class ValidateFormRequest
      * Obter a classe FormRequest associada à requisição.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string|null
+     * @return FormRequest|null
      */
     protected function getFormRequestClass(Request $request): FormRequest|null
     {

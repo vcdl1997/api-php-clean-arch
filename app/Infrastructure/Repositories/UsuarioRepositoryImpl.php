@@ -24,6 +24,6 @@ class UsuarioRepositoryImpl implements UsuarioRepository
     }
 
     public function delete(int $id): bool {
-        return Usuario::where(Usuario::ID, $id)->delete();
+        return $this->findBy($id)->delete();
     }
 }

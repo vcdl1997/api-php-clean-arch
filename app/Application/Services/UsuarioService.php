@@ -46,8 +46,12 @@ class UsuarioService {
     }
 
     public function delete(int $id): void {
-        if(!$this->usuarioRepository->delete( $id)){
-            throw new BadRequestException("Erro ao atualizar Usuário");
+        try{
+            if(!$this->usuarioRepository->delete( $id)){
+                throw new BadRequestException("Erro ao deletar Usuário");
+            }
+        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            throw new NotFoundException("Usuário não encontrado");
         }
     }
 }

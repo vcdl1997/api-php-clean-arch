@@ -31,7 +31,7 @@ class UsuarioController extends Controller implements UsuarioApi
     }
 
     public function update(int $id, UsuarioVO $usuarioVO): JsonResponse  {
-        return Response::json($this->usuarioService->update($id, $usuarioVO), HttpStatusEnum::ACCEPTED);
+        return Response::json($this->usuarioService->update($id, $usuarioVO), HttpStatusEnum::OK);
     }
 
     public function delete(int $id): JsonResponse  {

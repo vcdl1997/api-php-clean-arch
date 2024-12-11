@@ -12,13 +12,235 @@
         }
     ],
     "paths": {
-        "/api/usuarios/{id}": {
+        "/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Busca um ou mais usuários de acordo com os filtros informados.",
+                "operationId": "97264a8233714b17bbd6a7a744d8fa00",
+                "responses": {
+                    "200": {
+                        "description": "Usuários encontrados com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID do usuário",
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "description": "Nome do usuário",
+                                                "type": "string"
+                                            },
+                                            "idade": {
+                                                "description": "Idade do usuário",
+                                                "type": "integer"
+                                            },
+                                            "created_at": {
+                                                "description": "Data de criação",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "Data de última atualização",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Campos inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "field": {
+                                                "description": "Campo",
+                                                "type": "string"
+                                            },
+                                            "message": {
+                                                "description": "Mensagem",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Servidor não pode atender à solicitação.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Cria um novo usuário.",
+                "operationId": "6906c2c7a27c047636548e5ff835b01a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "idade"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "description": "Nome do usuário",
+                                        "type": "string"
+                                    },
+                                    "idade": {
+                                        "description": "Idade do usuário",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso.",
+                        "headers": {
+                            "Location": {
+                                "description": "URL do novo usuário",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "/usuarios/{id}"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "description": "Nome do usuário",
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "description": "Idade do usuário",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Data de criação",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Data de última atualização",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Campos inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "field": {
+                                                "description": "Campo",
+                                                "type": "string"
+                                            },
+                                            "message": {
+                                                "description": "Mensagem",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Servidor não pode atender à solicitação.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/usuarios/{id}": {
             "get": {
                 "tags": [
                     "Usuários"
                 ],
                 "summary": "Busca um usuário pelo ID.",
-                "operationId": "3d2ee4fa7d67abe271185a6356946846",
+                "operationId": "aecb6f29e5853b2d2cb5ddf38c397a06",
                 "parameters": [
                     {
                         "name": "id",
@@ -32,16 +254,298 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Usuário encontrado com sucesso."
-                    },
-                    "400": {
-                        "description": "Erro ao processar requisição."
+                        "description": "Usuário encontrado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "description": "Nome do usuário",
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "description": "Idade do usuário",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Data de criação",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Data de última atualização",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Usuário não encontrado."
+                        "description": "Usuário não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Servidor não pode atender à solicitação."
+                        "description": "Servidor não pode atender à solicitação.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Atualiza um usuário existente.",
+                "operationId": "212514b5cd00e9e46bbdbde77739caaa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário a ser atualizado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "idade"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "description": "Nome do usuário",
+                                        "type": "string"
+                                    },
+                                    "idade": {
+                                        "description": "Idade do usuário",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "description": "Nome do usuário",
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "description": "Idade do usuário",
+                                            "type": "integer"
+                                        },
+                                        "created_at": {
+                                            "description": "Data de criação",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "description": "Data de última atualização",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Campos inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "field": {
+                                                "description": "Campo",
+                                                "type": "string"
+                                            },
+                                            "message": {
+                                                "description": "Mensagem",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Servidor não pode atender à solicitação.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Exclui um usuário existente.",
+                "operationId": "31878c01a40d386e127a5ee15de2c4ed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário a ser excluído",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Usuário excluído com sucesso. Não retorna conteúdo."
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Servidor não pode atender à solicitação.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "description": "Data da ocorrência do erro",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [

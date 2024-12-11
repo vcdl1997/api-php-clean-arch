@@ -54,7 +54,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            'channels' => ['single'],  // Garantir que é apenas o 'single' aqui
             'ignore_exceptions' => false,
         ],
 
@@ -62,7 +62,7 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
+            'formatter' => \App\Infrastructure\Configurations\Logging\LoggerFormatter::class,
         ],
 
         'daily' => [

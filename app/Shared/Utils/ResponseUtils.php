@@ -18,14 +18,14 @@ class ResponseUtils
 
         return response()->json([
             'errors' => $errors,
-            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s')
+            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s.u')
         ],  HttpStatusEnum::UNPROCESSABLE_ENTITY);
     }
 
     public static function error(Exception $exception, int $statusCode): JsonResponse{
         return response()->json([
             'message' => $exception->getMessage(),
-            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s')
+            'timestamp' => now('America/Sao_Paulo')->format('Y-m-d H:i:s.u')
         ], status: $statusCode);
     }
 

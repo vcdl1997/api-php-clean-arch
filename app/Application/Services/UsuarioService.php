@@ -7,6 +7,7 @@ use App\Domain\Repositories\UsuarioRepository;
 use App\Domain\VO\UsuarioVO;
 use App\Shared\Exceptions\BadRequestException;
 use App\Shared\Exceptions\NotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class UsuarioService {
 

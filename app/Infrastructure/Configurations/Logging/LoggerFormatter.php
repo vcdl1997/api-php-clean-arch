@@ -19,7 +19,7 @@ class LoggerFormatter extends LineFormatter
     }
     private function convertToJson(LogRecord $record): string
     {
-        $message = $this->format($record);
+        $message = parent::format($record);
 
         return json_encode([
             'timestamp' => $record->datetime->format('Y-m-d H:i:s.u'),

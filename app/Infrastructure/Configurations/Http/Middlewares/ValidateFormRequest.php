@@ -12,7 +12,7 @@ class ValidateFormRequest
 {
     public function handle(Request $request, Closure $next)
     {
-        $formRequestClass = $this->getFormRequestClass($request);
+        $formRequestClass = $this->getFormRequestClassName($request);
 
         if ($formRequestClass) {
             $formRequest = App::make($formRequestClass);
@@ -22,7 +22,7 @@ class ValidateFormRequest
         return $next($request);
     }
 
-    private function getFormRequestClass(Request $request): FormRequest|null
+    private function getFormRequestClassName(Request $request): string|null
     {
         $action = $request->route()->getActionName();
 
@@ -34,8 +34,8 @@ class ValidateFormRequest
             $type = $parameter->getType();
             $name = $type->getName();
 
-            if ($type && str_contains($name, 'VO') && class_exists($type->getName()) && new $name() instanceof FormRequest) {
-                return new $name();
+            if ($type && str_contains($name, 'VO') && class_exists($name) && new $name() instanceof FormRequest) {
+                return $name;
             }
         }
 

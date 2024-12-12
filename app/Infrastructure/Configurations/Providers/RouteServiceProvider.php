@@ -7,12 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $namespace = 'App\Application\Controllers';
+    const NAMESPACE_CONTROLLERS = 'App\Application\Controllers';
 
     public function boot()
     {
         Route::middleware('api')
-            ->namespace($this->namespace)
+            ->namespace(self::NAMESPACE_CONTROLLERS)
             ->group(base_path('routes/api.php'));
     }
 }

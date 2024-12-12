@@ -10,19 +10,11 @@ use ReflectionMethod;
 
 class ValidateFormRequest
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
-        // Verifica se o controller da requisição foi de fato um FormRequest
         $formRequestClass = $this->getFormRequestClass($request);
 
-        if ($formRequestClass) {
+        if () {
             $formRequest = App::make($formRequestClass);
             $formRequest->validateResolved();
         }
@@ -30,15 +22,10 @@ class ValidateFormRequest
         return $next($request);
     }
 
-    /**
-     * Obter a classe FormRequest associada à requisição.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
-     */
-    protected function getFormRequestClass(Request $request): FormRequest|null
+    private function getFormRequestClass(Request $request): FormRequest|null
     {
         $action = $request->route()->getActionName();
+
         list($controller, $method) = explode('@', $action);
 
         $reflection = new ReflectionMethod($controller, $method);
@@ -47,7 +34,7 @@ class ValidateFormRequest
             $type = $parameter->getType();
             $name = $type->getName();
 
-            if ($type && str_contains($name, 'VO') && class_exists($type->getName() && new $name() instanceof FormRequest)) {
+            if ($type && str_contains($name, 'VO') && class_exists($type->getName()) && new $name() instanceof FormRequest) {
                 return new $name();
             }
         }

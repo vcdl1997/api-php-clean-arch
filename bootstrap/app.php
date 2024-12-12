@@ -35,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             // 'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Infrastructure\Configurations\Http\Middlewares\ValidateFormRequest::class,
+            \App\Infrastructure\Configurations\Http\Middlewares\EmbedTraceId::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

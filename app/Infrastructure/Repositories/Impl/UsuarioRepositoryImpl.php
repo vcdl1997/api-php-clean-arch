@@ -2,9 +2,7 @@
 
 namespace App\Infrastructure\Repositories\Impl;
 
-use App\Domain\Entities\AbstractEntity;
 use App\Domain\Entities\Usuario;
-use App\Domain\Repositories\CrudRepository;
 use App\Domain\Repositories\UsuarioRepository;
 use App\Infrastructure\Repositories\AbstractRepository;
 

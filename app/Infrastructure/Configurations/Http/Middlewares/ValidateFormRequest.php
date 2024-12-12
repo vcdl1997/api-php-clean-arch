@@ -14,7 +14,7 @@ class ValidateFormRequest
     {
         $formRequestClass = $this->getFormRequestClass($request);
 
-        if () {
+        if ($formRequestClass) {
             $formRequest = App::make($formRequestClass);
             $formRequest->validateResolved();
         }

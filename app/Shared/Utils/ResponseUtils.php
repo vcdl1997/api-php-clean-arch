@@ -6,6 +6,7 @@ use App\Shared\Enums\HttpStatusEnum;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class ResponseUtils
 {
@@ -24,7 +25,7 @@ class ResponseUtils
         ],  HttpStatusEnum::UNPROCESSABLE_ENTITY);
     }
 
-    public static function error(Exception $exception, int $statusCode): JsonResponse{
+    public static function error(Throwable $exception, int $statusCode): JsonResponse{
         return response()->json([
             'message' => $exception->getMessage(),
             'timestamp' => now()->format('Y-m-d H:i:s.u')

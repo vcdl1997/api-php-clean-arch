@@ -2,18 +2,17 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Traits\CommonTableColumns;
 use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
+    use CommonTableColumns;
+
     const TABELA = 'usuario';
     const ID = 'id';
     const NOME = 'nome';
     const IDADE = 'idade';
-    const DT_HR_CRIACAO = 'created_at';
-    const DT_HR_ATUALIZACAO = 'updated_at';
-    const DT_HR_DELECAO = 'deleted_at';
-
     protected $table = self::TABELA;
 
     protected $fillable = [

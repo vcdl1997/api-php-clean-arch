@@ -10,7 +10,6 @@ class Usuario extends Model
     use CommonTableColumns;
 
     const TABELA = 'usuario';
-    const ID = 'id';
     const NOME = 'nome';
     const IDADE = 'idade';
     protected $table = self::TABELA;

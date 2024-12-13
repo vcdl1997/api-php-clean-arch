@@ -34,8 +34,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('api', [
             // 'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Infrastructure\Configurations\Http\Middlewares\EmbedTraceId::class,
             \App\Infrastructure\Configurations\Http\Middlewares\ValidateFormRequest::class,
-            \App\Infrastructure\Configurations\Http\Middlewares\EmbedTraceId::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

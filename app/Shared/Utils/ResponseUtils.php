@@ -2,6 +2,7 @@
 
 namespace App\Shared\Utils;
 
+use App\Shared\Enums\HttpHeadersEnum;
 use App\Shared\Enums\HttpStatusEnum;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -20,14 +21,16 @@ class ResponseUtils
 
         return response()->json([
             'errors' => $errors,
-            'timestamp' => now()->format('Y-m-d H:i:s.u')
+            'timestamp' => now()->format('Y-m-d H:i:s.u'),
+            'traceId' => request()->header(HttpHeadersEnum::X_TRACE_ID)
         ],  HttpStatusEnum::UNPROCESSABLE_ENTITY);
     }
 
     public static function error(Throwable $exception, int $statusCode): JsonResponse{
         return response()->json([
             'message' => $exception->getMessage(),
-            'timestamp' => now()->format('Y-m-d H:i:s.u')
+            'timestamp' => now()->format('Y-m-d H:i:s.u'),
+            'traceId' => request()->header(HttpHeadersEnum::X_TRACE_ID)
         ], status: $statusCode);
     }
 

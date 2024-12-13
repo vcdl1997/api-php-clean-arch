@@ -2,6 +2,7 @@
 
 namespace App\Application\Contracts;
 
+use App\Domain\VO\FiltroUsuarioVO;
 use App\Domain\VO\UsuarioVO;
 use Illuminate\Http\JsonResponse;
 
@@ -51,7 +52,7 @@ interface UsuarioApi extends BaseApi
      *   )
      * )
      */
-    public function search(): JsonResponse;
+    public function search(FiltroUsuarioVO $filtroVO): JsonResponse;
 
     /**
      * @OA\Get(

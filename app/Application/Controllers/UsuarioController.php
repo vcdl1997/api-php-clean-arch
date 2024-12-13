@@ -4,6 +4,7 @@ namespace App\Application\Controllers;
 
 use App\Application\Contracts\UsuarioApi;
 use App\Application\Services\UsuarioService;
+use App\Domain\VO\FiltroUsuarioVO;
 use App\Domain\VO\UsuarioVO;
 use App\Shared\Enums\HttpStatusEnum;
 use App\Shared\Utils\ResponseUtils;
@@ -18,8 +19,8 @@ class UsuarioController extends Controller implements UsuarioApi
         $this->usuarioService = $usuarioService;
     }
 
-    public function search(): JsonResponse {
-        return Response::json($this->usuarioService->search(), HttpStatusEnum::OK);
+    public function search(FiltroUsuarioVO $filtroVO): JsonResponse {
+        return Response::json($this->usuarioService->search($filtroVO), HttpStatusEnum::OK);
     }
 
     public function findBy(int $id): JsonResponse  {

@@ -15,18 +15,20 @@ class UsuarioVO extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'idade' => 'required|integer|min:1',
+            'nome' => ['required', 'string', 'max:255'],
+            'idade' => ['required', 'integer', 'min:18'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'nome.required' => 'O nome é obrigatório',
-            'idade.required' => 'A idade é obrigatória',
-            'nome.string' => 'O nome deve ser do tipo string',
-            'idade.integer' => 'A idade deve ser do tipo integer',
+            'nome.required' => 'O campo “nome” é obrigatório',
+            'nome.string' => 'O campo “nome” deve ser do tipo string',
+            'nome.max' => 'O campo “nome” de possuir no máximo 255 caracteres',
+            'idade.required' => 'O campo “idade” é obrigatória',
+            'idade.integer' => 'O campo “idade” deve ser do tipo integer',
+            'idade.min' => 'O valor mínimo permitido para o campo “idade” é 18'
         ];
     }
 

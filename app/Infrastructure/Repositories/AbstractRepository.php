@@ -3,15 +3,20 @@
 namespace App\Infrastructure\Repositories;
 
 use App\Domain\Repositories\CrudRepository;
+use App\Shared\Utils\ArgumentUtils;
+use \Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 abstract class AbstractRepository implements CrudRepository
 {
     protected Model $entity;
+    protected Builder $builder;
 
     public function __construct(Model $entity)
     {
         $this->entity = $entity;
+        $this->builder = DB::table($entity->getTable());
     }
 
     public function findBy(int $id): Model {
@@ -28,5 +33,26 @@ abstract class AbstractRepository implements CrudRepository
 
     public function delete($id): bool {
         return $this->findBy($id)->delete();
+    }
+
+    protected function addEquals(string $column = null, mixed $value = null): self {
+        if(ArgumentUtils::validateAllByPredicate([$column, $value], fn($value): bool => !empty($value))){
+            $this->builder = $this->builder->where($column, '=', $value);
+        }
+
+        return $this;
+    }
+
+    protected function addPagination(array $pagination = []): self {
+        $page = (int) data_get($pagination, 'page',0);
+        $limit = (int) data_get($pagination, 'limit',10);
+        $offset = empty($page) ? 0 : ($limit * $page);
+        $this->builder = $this->builder->limit(value:  $limit)->offset($offset);
+
+        return $this;
+    }
+
+    protected function totalItems(): int {
+        return $this->builder->count();
     }
 }

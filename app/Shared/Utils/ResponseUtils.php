@@ -3,7 +3,6 @@
 namespace App\Shared\Utils;
 
 use App\Shared\Enums\HttpStatusEnum;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Throwable;

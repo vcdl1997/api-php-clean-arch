@@ -4,6 +4,7 @@ namespace App\Application\Services;
 
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepository;
+use App\Domain\VO\FiltroUsuarioVO;
 use App\Domain\VO\UsuarioVO;
 use App\Shared\Exceptions\BadRequestException;
 use App\Shared\Exceptions\NotFoundException;
@@ -17,9 +18,9 @@ class UsuarioService {
         $this->usuarioRepository = $usuarioRepository;
     }
 
-    public function search(): array
+    public function search(FiltroUsuarioVO $filtroVO): array
     {
-        return $this->usuarioRepository->search();
+        return $this->usuarioRepository->search($filtroVO->all());
     }
 
     public function findBy(int $id): Usuario {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface CrudRepository
 {
-    public function search(): array;
+    public function search(array $filters): array;
 
     public function findBy(int $id): Model;
 

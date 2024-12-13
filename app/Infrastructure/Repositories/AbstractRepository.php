@@ -36,7 +36,7 @@ abstract class AbstractRepository implements CrudRepository
     }
 
     protected function addEquals(string $column = null, mixed $value = null): self {
-        if(ArgumentUtils::validateAllByPredicate([$column, $value], fn($value): bool => !empty($value))){
+        if(!empty($column) && !empty($value)) {
             $this->builder = $this->builder->where($column, '=', $value);
         }
 

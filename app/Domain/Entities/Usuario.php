@@ -12,6 +12,7 @@ class Usuario extends Model
     const TABELA = 'usuario';
     const NOME = 'nome';
     const IDADE = 'idade';
+    
     protected $table = self::TABELA;
 
     protected $fillable = [

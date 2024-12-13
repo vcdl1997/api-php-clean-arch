@@ -16,7 +16,7 @@ class ResponseUtils
     public static function unprocessableEntity(ValidationException $exception): JsonResponse{
         $errors = collect($exception->errors())->map(function ($message, $field) {
             return ['field' =>  $field, 'message' => current($message)];
-        });
+        })->values();
 
         return response()->json([
             'errors' => $errors,

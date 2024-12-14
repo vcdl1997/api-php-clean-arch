@@ -19,6 +19,62 @@
                 ],
                 "summary": "Busca um ou mais usuários de acordo com os filtros informados.",
                 "operationId": "97264a8233714b17bbd6a7a744d8fa00",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Nome do usuário",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "João"
+                        }
+                    },
+                    {
+                        "name": "idade",
+                        "in": "query",
+                        "description": "Idade do usuário",
+                        "required": false,
+                        "schema": {
+                            "type": "int",
+                            "example": "17"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página a ser listada",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Número que define a quantidade de registros por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 1000,
+                            "example": 100
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Indica a ordenação dos campos",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^([a-zA-Z_]+,(asc|desc))(,([a-zA-Z_]+,(asc|desc)))*$",
+                            "example": "nome,asc"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Usuários encontrados com sucesso.",
@@ -39,16 +95,6 @@
                                             "idade": {
                                                 "description": "Idade do usuário",
                                                 "type": "integer"
-                                            },
-                                            "created_at": {
-                                                "description": "Data de criação",
-                                                "type": "string",
-                                                "format": "date-time"
-                                            },
-                                            "updated_at": {
-                                                "description": "Data de última atualização",
-                                                "type": "string",
-                                                "format": "date-time"
                                             }
                                         },
                                         "type": "object"

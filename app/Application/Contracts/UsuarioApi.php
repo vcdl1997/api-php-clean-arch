@@ -14,6 +14,41 @@ interface UsuarioApi extends BaseApi
      *   tags={"Usuários"},
      *   summary="Busca um ou mais usuários de acordo com os filtros informados.",
      *   security={ {"apiAuth": {} }},
+     *   @OA\Parameter(
+     *       name="nome",
+     *       in="query",
+     *       description="Nome do usuário",
+     *       required=false,
+     *       @OA\Schema(type="string", example="João")
+     *   ),
+     *   @OA\Parameter(
+     *       name="idade",
+     *       in="query",
+     *       description="Idade do usuário",
+     *       required=false,
+     *       @OA\Schema(type="int", example="17")
+     *   ),
+     *   @OA\Parameter(
+     *       name="page",
+     *       in="query",
+     *       description="Número da página a ser listada",
+     *       required=false,
+     *       @OA\Schema(type="integer", default=0, example=1)
+     *   ),
+     *   @OA\Parameter(
+     *       name="limit",
+     *       in="query",
+     *       description="Número que define a quantidade de registros por página",
+     *       required=false,
+     *       @OA\Schema(type="integer", default=10, maximum=1000, example=100)
+     *   ),
+     *   @OA\Parameter(
+     *       name="order",
+     *       in="query",
+     *       description="Indica a ordenação dos campos",
+     *       required=false,
+     *       @OA\Schema(type="string", pattern="^([a-zA-Z_]+,(asc|desc))(,([a-zA-Z_]+,(asc|desc)))*$", example="nome,asc")
+     *   ),
      *   @OA\Response(
      *       response=200,
      *       description="Usuários encontrados com sucesso.",
@@ -23,9 +58,7 @@ interface UsuarioApi extends BaseApi
      *               type="object",
      *               @OA\Property(property="id", type="integer", description="ID do usuário"),
      *               @OA\Property(property="nome", type="string", description="Nome do usuário"),
-     *               @OA\Property(property="idade", type="integer", description="Idade do usuário"),
-     *               @OA\Property(property="created_at", type="string", format="date-time", description="Data de criação"),
-     *               @OA\Property(property="updated_at", type="string", format="date-time", description="Data de última atualização")
+     *               @OA\Property(property="idade", type="integer", description="Idade do usuário")
      *           )
      *       )
      *   ),

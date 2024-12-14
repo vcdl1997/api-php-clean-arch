@@ -10,21 +10,21 @@ abstract class PaginationVO extends FormRequest
     public function rules(): array
     {
         return [
-            'order' => ['nullable', 'string', 'regex:' . self::REGEX_COLUMN_SORTING],
+            'page' => ['nullable', 'integer', 'min:0'],
             'limit' => ['nullable', 'integer', 'max:1000'],
-            'page' => ['nullable', 'integer', 'min:0']
+            'order' => ['nullable', 'string', 'regex:' . self::REGEX_COLUMN_SORTING],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'order.string' => 'O campo “order” deve ser do tipo string',
-            'order.regex' => 'O campo “order” deve seguir conforme o exemplo: campo_abc,asc|desc...',
+            'page.integer' => 'O campo “page” deve ser do tipo integer',
+            'page.max' => 'O valor mínimo permitido para o campo “page” é 0',
             'limit.integer' => 'O campo “limit” deve ser do tipo integer',
             'limit.max' => 'O campo “limit” só suporta até 1000 registros por página',
-            'page.integer' => 'O campo “page” deve ser do tipo integer',
-            'page.max' => 'O valor mínimo permitido para o campo “page” é 0'
+            'order.string' => 'O campo “order” deve ser do tipo string',
+            'order.regex' => 'O campo “order” deve seguir conforme o exemplo: campo_abc,asc|desc...',
         ];
     }
 }

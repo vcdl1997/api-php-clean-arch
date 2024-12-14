@@ -3,7 +3,6 @@
 namespace App\Domain\Repositories;
 
 use App\Domain\DTO\PaginationDTO;
-use App\Domain\Entities\Usuario;
 use Illuminate\Database\Eloquent\Model;
 
 interface CrudRepository

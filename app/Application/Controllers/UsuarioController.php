@@ -4,8 +4,7 @@ namespace App\Application\Controllers;
 
 use App\Application\Contracts\UsuarioApi;
 use App\Application\Services\UsuarioService;
-use App\Domain\VO\FiltroUsuarioVO;
-use App\Domain\VO\UsuarioVO;
+use App\Domain\VO\{FiltroUsuarioVO, UsuarioVO};
 use App\Shared\Enums\HttpStatusEnum;
 use App\Shared\Utils\ResponseUtils;
 use Illuminate\Http\JsonResponse;

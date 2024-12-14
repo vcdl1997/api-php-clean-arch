@@ -2,8 +2,7 @@
 
 namespace App\Application\Contracts;
 
-use App\Domain\VO\FiltroUsuarioVO;
-use App\Domain\VO\UsuarioVO;
+use App\Domain\VO\{FiltroUsuarioVO, UsuarioVO};
 use Illuminate\Http\JsonResponse;
 
 interface UsuarioApi extends BaseApi

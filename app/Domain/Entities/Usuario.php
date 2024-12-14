@@ -4,7 +4,6 @@ namespace App\Domain\Entities;
 
 use App\Domain\Traits\CommonTableColumns;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 class Usuario extends Model
 {

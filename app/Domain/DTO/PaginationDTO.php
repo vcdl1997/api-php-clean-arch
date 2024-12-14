@@ -4,8 +4,9 @@ namespace App\Domain\DTO;
 
 use App\Shared\Utils\HttpUtils;
 use Illuminate\Support\Collection;
+use JsonSerializable;
 
-class PaginationDTO
+class PaginationDTO implements JsonSerializable
 {
 
     const CURRENT_PAGE = "current_page";
@@ -24,19 +25,7 @@ class PaginationDTO
         $this->meta[self::TOTAL_ITEMS] = $totalItems;
     }
 
-    public function getData(): array {
-        return $this->data;
-    }
-
-    public function getMeta(): array {
-        return $this->meta;
-    }
-
-    public function getIdade(): array {
-        return $this->links;
-    }
-
-    public function toArray(): array {
+    public function jsonSerialize(): array {
         return [
             "data" => $this->data,
             "meta" => $this->meta,

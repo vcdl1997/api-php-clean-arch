@@ -14,16 +14,11 @@ class UsuarioRepositoryImpl extends AbstractRepository implements UsuarioReposit
         parent::__construct($usuario);
     }
 
-    public function search(array $filters): array {
-        $users = $this->buildQuery( $filters)->get()->map(function ($usuario) {
-            return (array) $usuario;
-        });
-        $totalItems = $this->totalItems();
-
-        return PaginationDTO::build($users, $totalItems)->addMeta($filters)->addLinks('usuario.search')->toArray();
+    public function search(array $filters): PaginationDTO {
+        return PaginationDTO::build($this->buildQuery( $filters)->get()->mapContentToArray(), $this->totalItems());
     }
 
-    private function buildQuery(array $filters) : Builder {
+    private function buildQuery(array $filters): Builder {
         return $this->addProjection()->addFilters($filters)->addPagination($filters)->builder;
     }
 

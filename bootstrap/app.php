@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Symfony\Component\HttpKernel\HttpKernel;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -34,8 +33,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('api', [
             // 'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Infrastructure\Configurations\Http\Middlewares\EmbedTraceId::class,
-            \App\Infrastructure\Configurations\Http\Middlewares\ValidateFormRequest::class,
+            \App\Infrastructure\Configurations\Middlewares\EmbedTraceId::class,
+            \App\Infrastructure\Configurations\Middlewares\ValidateFormRequest::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

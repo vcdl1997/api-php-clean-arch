@@ -2,14 +2,12 @@
 
 namespace App\Application\Services;
 
+use App\Domain\DTO\{PaginationDTO, UsuarioDTO};
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepository;
-use App\Domain\VO\FiltroUsuarioVO;
-use App\Domain\VO\UsuarioVO;
-use App\Shared\Exceptions\BadRequestException;
-use App\Shared\Exceptions\NotFoundException;
-use Illuminate\Support\Facades\Log;
-
+use App\Domain\VO\{FiltroUsuarioVO, UsuarioVO};
+use App\Shared\Exceptions\{BadRequestException, NotFoundException};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UsuarioService {
 
     private UsuarioRepository $usuarioRepository;
@@ -18,30 +16,30 @@ class UsuarioService {
         $this->usuarioRepository = $usuarioRepository;
     }
 
-    public function search(FiltroUsuarioVO $filtroVO): array
+    public function search(FiltroUsuarioVO $filtroVO): PaginationDTO
     {
-        return $this->usuarioRepository->search($filtroVO->all());
+        return $this->usuarioRepository->search($filtroVO->all())->addMeta($filtroVO->all())->addLinks('usuario.search');
     }
 
     public function findBy(int $id): Usuario {
         try{
             return $this->usuarioRepository->findBy($id);
-        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+        }catch(ModelNotFoundException $e){
             throw new NotFoundException("Usuário não encontrado");
         }
     }
 
-    public function create(UsuarioVO $usuarioVO): Usuario {
-        return $this->usuarioRepository->create( $usuarioVO->toEntity());
+    public function create(UsuarioVO $usuarioVO): UsuarioDTO {
+        return UsuarioDTO::build($this->usuarioRepository->create( $usuarioVO->toEntity()));
     }
 
-    public function update(int $id, UsuarioVO $usuarioVO): Usuario {
+    public function update(int $id, UsuarioVO $usuarioVO): UsuarioDTO {
         try{
             if(!$this->usuarioRepository->update( $id, $usuarioVO->toEntity())){
                 throw new BadRequestException("Erro ao atualizar Usuário");
             }
-            return $this->usuarioRepository->findBy($id);
-        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return UsuarioDTO::build($this->usuarioRepository->findBy($id));
+        }catch(ModelNotFoundException $e){
             throw new NotFoundException("Usuário não encontrado");
         }
     }
@@ -51,7 +49,7 @@ class UsuarioService {
             if(!$this->usuarioRepository->delete( $id)){
                 throw new BadRequestException("Erro ao deletar Usuário");
             }
-        }catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+        }catch(ModelNotFoundException $e){
             throw new NotFoundException("Usuário não encontrado");
         }
     }

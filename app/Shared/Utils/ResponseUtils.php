@@ -10,10 +10,6 @@ use Throwable;
 
 class ResponseUtils
 {
-    public static function created(object $resource, string $uri): JsonResponse{
-        return response()->json($resource, HttpStatusEnum::CREATED, ["Location" => route($uri, $resource->id)]);
-    }
-
     public static function unprocessableEntity(ValidationException $exception): JsonResponse{
         $errors = collect($exception->errors())->map(function ($message, $field) {
             return ['field' =>  $field, 'message' => current($message)];
@@ -34,4 +30,12 @@ class ResponseUtils
         ], status: $statusCode);
     }
 
+    public static function created(object $resource, string $uri): JsonResponse{
+        return response()->json($resource, HttpStatusEnum::CREATED, ["Location" => route($uri, self::extractId($resource))]);
+    }
+
+    private static function extractId(object $resource): int|null{
+        $data = collect($resource)->toArray();
+        return data_get($data,"id");
+    }
 }

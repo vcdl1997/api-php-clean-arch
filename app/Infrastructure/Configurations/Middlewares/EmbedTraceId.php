@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Configurations\Http\Middlewares;
+namespace App\Infrastructure\Configurations\Middlewares;
 
 use App\Shared\Enums\HttpHeadersEnum;
 use Closure;

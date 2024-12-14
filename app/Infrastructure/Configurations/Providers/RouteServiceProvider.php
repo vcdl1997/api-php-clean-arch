@@ -2,17 +2,18 @@
 
 namespace App\Infrastructure\Configurations\Providers;
 
-use Illuminate\Support\Facades\Route;
+use App\Infrastructure\Configurations\Middlewares\EnableTransaction;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
     const NAMESPACE_CONTROLLERS = 'App\Application\Controllers';
 
-    public function boot()
+    public function boot(Router $router)
     {
-        Route::middleware('api')
-            ->namespace(self::NAMESPACE_CONTROLLERS)
-            ->group(base_path('routes/api.php'));
+        $router->middleware('api')->namespace(self::NAMESPACE_CONTROLLERS)->group(base_path('routes/api.php'));
+
+        $router->aliasMiddleware('enableTransaction', EnableTransaction::class);
     }
 }

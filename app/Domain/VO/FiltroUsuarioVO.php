@@ -64,9 +64,6 @@ class FiltroUsuarioVO extends PaginationVO
     }
 
     public function transformOrder(string|null $order): string|null {
-        $sortColumns = self::SORT_COLUMNS;
-        $convertedSortColumns = self::CONVERTED_SORT_COLUMNS;
-
-        return $order ? str_replace($sortColumns, $convertedSortColumns, $order) : null;
+        return $order ? str_replace(self::SORT_COLUMNS, self::CONVERTED_SORT_COLUMNS, $order) : null;
     }
 }

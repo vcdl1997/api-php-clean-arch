@@ -3,7 +3,6 @@
 namespace App\Infrastructure\Repositories;
 
 use App\Domain\Repositories\CrudRepository;
-use App\Shared\Utils\ArgumentUtils;
 use \Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

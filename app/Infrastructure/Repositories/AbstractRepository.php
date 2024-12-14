@@ -47,10 +47,37 @@ abstract class AbstractRepository implements CoreRepository
         return $this;
     }
 
-    protected function addPagination(array $pagination = []): self {
-        if($pagination['enablePagination']){
-            $page = (int) data_get($pagination, 'page',0);
-            $limit = (int) data_get($pagination, 'limit',10);
+    protected function addOrders(array $filters = []): self {
+        $order = $this->extractColumnsAndOrdering(data_get($filters, 'order', []));
+
+        if($order){
+            foreach($order as $column => $ordering){
+                $this->builder = $this->builder->orderBy($column, $ordering);
+            }
+        }
+
+        return $this;
+    }
+
+    private function extractColumnsAndOrdering(string|array|null $order){
+        $order = is_array($order) ? $order : array_filter(explode(",", $order));
+
+        if(!empty($order) && count($order) % 2 == 0){
+            $order = array_chunk($order, 2);
+
+            foreach($order as $index => $value) {
+                $order[current($value)] = last($value);
+                unset($order[$index]);
+            }
+        }
+
+        return $order;
+    }
+
+    protected function addPagination(array $filters = []): self {
+        if(data_get($filters, 'enablePagination', false)){
+            $page = (int) data_get($filters, 'page',0);
+            $limit = (int) data_get($filters, 'limit',10);
             $offset = empty($page) ? 0 : ($limit * $page);
             $this->builder = $this->builder->limit($limit)->offset($offset);
         }

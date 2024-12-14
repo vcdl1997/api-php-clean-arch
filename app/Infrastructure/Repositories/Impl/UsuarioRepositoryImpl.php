@@ -19,7 +19,7 @@ class UsuarioRepositoryImpl extends AbstractRepository implements UsuarioReposit
     }
 
     private function buildQuery(array $filters): Builder {
-        return $this->addProjection()->addFilters($filters)->addPagination($filters)->builder;
+        return $this->addProjection()->addFilters($filters)->addOrders($filters)->addPagination($filters)->builder;
     }
 
     private function addProjection(): self {
@@ -33,7 +33,7 @@ class UsuarioRepositoryImpl extends AbstractRepository implements UsuarioReposit
     }
 
     private function addFilters(array $filters): self {
-        $id = data_get($filters,key: Usuario::ID);
+        $id = data_get($filters,Usuario::ID);
         $nome = data_get($filters,Usuario::NOME);
         $idade = data_get($filters,Usuario::IDADE);
 

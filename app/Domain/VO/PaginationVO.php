@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 abstract class PaginationVO extends FormRequest
 {
+    const REGEX_LAST_COMMA = '/,(?!.*,)/';
     const REGEX_COLUMN_SORTING = '/^([a-zA-Z_]+,(asc|desc))(,([a-zA-Z_]+,(asc|desc)))*$/';
 
     public function enablePagination(bool $enablePagination): self {
@@ -49,5 +50,17 @@ abstract class PaginationVO extends FormRequest
             'order.string' => 'O campo “order” deve ser do tipo string',
             'order.regex' => 'O campo “order” deve seguir conforme o exemplo: campo_abc,asc|desc...',
         ];
+    }
+
+    public abstract function transformOrder(string|null $order): string|null;
+
+    protected function checkOrder(array $validSortableColumns){
+        return function ($attribute, $value, $fail) use ($validSortableColumns){
+            $columnsToSort = explode(',', str_replace([',asc', ',desc'], [], $value));
+
+            if (empty(array_intersect($columnsToSort, $validSortableColumns))) {
+                $fail('O campo “order” só permite os seguintes valores: ' .  preg_replace(self::REGEX_LAST_COMMA, " e", implode(', ',  $validSortableColumns)));
+            }
+        };
     }
 }

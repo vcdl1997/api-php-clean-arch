@@ -8,6 +8,8 @@ use App\Domain\Repositories\UsuarioRepository;
 use App\Domain\VO\{FiltroUsuarioVO, UsuarioVO};
 use App\Shared\Exceptions\{BadRequestException, NotFoundException};
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
+
 class UsuarioService {
 
     private UsuarioRepository $usuarioRepository;
@@ -16,9 +18,14 @@ class UsuarioService {
         $this->usuarioRepository = $usuarioRepository;
     }
 
-    public function search(FiltroUsuarioVO $filtroVO): PaginationDTO
+    public function search(FiltroUsuarioVO $filtroVO, bool $pagination = true): PaginationDTO|Collection
     {
-        return $this->usuarioRepository->search($filtroVO->all())->addMeta($filtroVO->all())->addLinks('usuario.search');
+        $filters = $filtroVO->enablePagination($pagination);
+        $data = $this->usuarioRepository->search($filters->all());
+
+        if(!$pagination) return $data;
+
+        return PaginationDTO::build($data, $this->usuarioRepository->totalItems())->addMeta($filters->all())->addLinks('usuario.search');
     }
 
     public function findBy(int $id): Usuario {

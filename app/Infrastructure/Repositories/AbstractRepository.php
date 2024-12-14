@@ -2,12 +2,12 @@
 
 namespace App\Infrastructure\Repositories;
 
-use App\Domain\Repositories\CrudRepository;
+use App\Domain\Repositories\CoreRepository;
 use \Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-abstract class AbstractRepository implements CrudRepository
+abstract class AbstractRepository implements CoreRepository
 {
     protected Model $entity;
     protected Builder $builder;
@@ -34,6 +34,11 @@ abstract class AbstractRepository implements CrudRepository
         return $this->findBy($id)->delete();
     }
 
+    public function totalItems(): int {
+        $this->builder = $this->builder->limit(PHP_INT_MAX)->offset(0);
+        return $this->builder->count();
+    }
+
     protected function addEquals(string $column = null, mixed $value = null): self {
         if(!empty($column) && !empty($value)) {
             $this->builder = $this->builder->where($column, '=', $value);
@@ -43,15 +48,13 @@ abstract class AbstractRepository implements CrudRepository
     }
 
     protected function addPagination(array $pagination = []): self {
-        $page = (int) data_get($pagination, 'page',0);
-        $limit = (int) data_get($pagination, 'limit',10);
-        $offset = empty($page) ? 0 : ($limit * $page);
-        $this->builder = $this->builder->limit($limit)->offset($offset);
+        if($pagination['enablePagination']){
+            $page = (int) data_get($pagination, 'page',0);
+            $limit = (int) data_get($pagination, 'limit',10);
+            $offset = empty($page) ? 0 : ($limit * $page);
+            $this->builder = $this->builder->limit($limit)->offset($offset);
+        }
 
         return $this;
-    }
-
-    protected function totalItems(): int {
-        return $this->builder->count();
     }
 }

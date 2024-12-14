@@ -2,11 +2,11 @@
 
 namespace App\Infrastructure\Repositories\Impl;
 
-use App\Domain\DTO\PaginationDTO;
 use App\Domain\Entities\Usuario;
 use App\Domain\Repositories\UsuarioRepository;
 use App\Infrastructure\Repositories\AbstractRepository;
 use \Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 
 class UsuarioRepositoryImpl extends AbstractRepository implements UsuarioRepository
 {
@@ -14,8 +14,8 @@ class UsuarioRepositoryImpl extends AbstractRepository implements UsuarioReposit
         parent::__construct($usuario);
     }
 
-    public function search(array $filters): PaginationDTO {
-        return PaginationDTO::build($this->buildQuery( $filters)->get()->mapContentToArray(), $this->totalItems());
+    public function search(array $filters): Collection {
+        return $this->buildQuery( $filters)->get()->mapContentToArray();
     }
 
     private function buildQuery(array $filters): Builder {

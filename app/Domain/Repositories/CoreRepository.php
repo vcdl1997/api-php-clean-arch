@@ -2,12 +2,12 @@
 
 namespace App\Domain\Repositories;
 
-use App\Domain\DTO\PaginationDTO;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
-interface CrudRepository
+interface CoreRepository
 {
-    public function search(array $filters): PaginationDTO;
+    public function search(array $filters): Collection;
 
     public function findBy(int $id): Model;
 
@@ -16,4 +16,6 @@ interface CrudRepository
     public function update(int $id, Model $usuario): bool;
 
     public function delete(int $id): bool;
+
+    public function totalItems(): int;
 }

@@ -7,6 +7,29 @@ use Illuminate\Foundation\Http\FormRequest;
 abstract class PaginationVO extends FormRequest
 {
     const REGEX_COLUMN_SORTING = '/^([a-zA-Z_]+,(asc|desc))(,([a-zA-Z_]+,(asc|desc)))*$/';
+
+    public function enablePagination(bool $enablePagination): self {
+        $this->merge(['enablePagination' => $enablePagination]);
+        return  $this;
+    }
+
+    public function page(int $page): self {
+        $this->merge(['page' => $page]);
+        return  $this;
+    }
+
+    public function limit(int $limit): self {
+        $this->merge(['limit' => $limit]);
+        return  $this;
+    }
+
+    public function order(string $order): self {
+        if(preg_match(self::REGEX_COLUMN_SORTING, $order)){
+            $this->merge(['order' => $order]);
+        }
+        return  $this;
+    }
+
     public function rules(): array
     {
         return [

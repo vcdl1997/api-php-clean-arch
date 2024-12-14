@@ -16,12 +16,12 @@ class PaginationDTO implements JsonSerializable
     const LINK_NEXT = "next";
     const LINK_PREVIOUS = "previous";
 
-    private array $data = [];
-    private array $meta = [ self::CURRENT_PAGE => 0, self::LIMIT_PAGE => 0, self::TOTAL_PAGES => 0 ];
-    private array $links = [ self::LINK_NEXT => null, self::LINK_PREVIOUS => null ];
+    private array $data;
+    private array $meta;
+    private array $links;
 
-    public function __construct(Collection $collection, int $totalItems){
-        $this->data = $collection->toArray();
+    public function __construct(Collection $data, int $totalItems){
+        $this->data = $data->toArray();
         $this->meta[self::TOTAL_ITEMS] = $totalItems;
     }
 
@@ -33,14 +33,14 @@ class PaginationDTO implements JsonSerializable
         ];
     }
 
-    public static function build(Collection $collection, int $totalItens): PaginationDTO {
-        return new PaginationDTO($collection, $totalItens);
+    public static function build(Collection $data, int $totalItens): PaginationDTO {
+        return new PaginationDTO($data, $totalItens);
     }
 
     public function addMeta(array $filters): PaginationDTO {
         $itemsPerPage = (int) data_get($filters, 'limit', 10);
-        $currentPage = (int) data_get($filters, 'page', 0);;
-        $totalPages = ceil( num: $this->meta[self::TOTAL_ITEMS] / $itemsPerPage);
+        $currentPage = (int) data_get($filters, 'page', 0);
+        $totalPages = ceil( $this->meta[self::TOTAL_ITEMS] / $itemsPerPage);
 
         $this->meta[self::CURRENT_PAGE] = $currentPage;
         $this->meta[self::LIMIT_PAGE] = $itemsPerPage;
@@ -54,7 +54,7 @@ class PaginationDTO implements JsonSerializable
         $totalPages = $this->meta[self::TOTAL_PAGES];
 
         $next = ($currentPage + 1) >= $totalPages ? null : HttpUtils::addParamsToUrl($url, [], [ "page" => $currentPage + 1]);
-        $previous = ($currentPage - 1) < 0 ? null : HttpUtils::addParamsToUrl($url, [], ["page"=> $currentPage - 1]);
+        $previous = (($currentPage - 1) < 0 || $currentPage > $totalPages) ? null : HttpUtils::addParamsToUrl($url, [], ["page"=> $currentPage - 1]);
 
         $this->links[self::LINK_NEXT] = $next;
         $this->links[self::LINK_PREVIOUS] = $previous;

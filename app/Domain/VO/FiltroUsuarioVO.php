@@ -4,6 +4,19 @@ namespace App\Domain\VO;
 
 class FiltroUsuarioVO extends PaginationVO
 {
+    public static function build(): PaginationVO {
+        return new FiltroUsuarioVO();
+    }
+
+    public function nome(string $nome): PaginationVO {
+        $this->merge(['nome' => $nome]);
+        return $this;
+    }
+
+    public function idade(int $idade): PaginationVO {
+        $this->merge(['idade' => $idade]);
+        return $this;
+    }
     public function validationData()
     {
         return $this->query->all();

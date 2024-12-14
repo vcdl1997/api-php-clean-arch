@@ -2,7 +2,7 @@
 
 namespace App\Domain\Repositories;
 
-interface UsuarioRepository extends CrudRepository
+interface UsuarioRepository extends CoreRepository
 {
 
 }

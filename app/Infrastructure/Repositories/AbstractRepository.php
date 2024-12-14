@@ -47,7 +47,7 @@ abstract class AbstractRepository implements CrudRepository
         $page = (int) data_get($pagination, 'page',0);
         $limit = (int) data_get($pagination, 'limit',10);
         $offset = empty($page) ? 0 : ($limit * $page);
-        $this->builder = $this->builder->limit(value:  $limit)->offset($offset);
+        $this->builder = $this->builder->limit($limit)->offset($offset);
 
         return $this;
     }
